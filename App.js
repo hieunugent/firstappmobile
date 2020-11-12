@@ -15,10 +15,10 @@ const App = () => {
   const [description, setDescription] = useState('');
   const [amount, setAmount] = useState('');
   const [total, setTotal] = useState(0);
-  const [data, setData] = useState([
-    {[new Date()]: 2000}, 
-    {[new Date() - 1] : 2500},
-  ])
+  // const [data, setData] = useState([
+  //   {[new Date()]: 2000}, 
+  //   {[new Date() - 1] : 2500},
+  // ])
 
   const [gigs, setGigs] = useState([
     {
@@ -44,14 +44,14 @@ const App = () => {
   //   barPercentage: 0.5,
   //   useShadowColorFromDataset: false // optional
   // };
-  // const data = {
-  //   labels: ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat"],
-  //   datasets: [
-  //     {
-  //       data: {}
-  //     }
-  //   ]
-  // };
+  const data = {
+    labels: ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat"],
+    datasets: [
+      {
+        data: [10,23,11,98,90]
+      }
+    ]
+  };
   const addGig = () => {
     setGigs([
       ...gigs,
