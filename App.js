@@ -18,15 +18,26 @@ const App = () => {
   const [total, setTotal] = useState(0);
   const [data, setData] = useState([
     {date: moment().format('LL'), amount: 2000},
-    {date: moment().subtract(1, 'day').format('LL'), amount: 2500},
-    {date: moment().subtract(2, 'day').format('LL'), amount: 1500},
-    {date: moment().subtract(2, 'day').format('LL'), amount: 2500},
-    {date: moment().subtract(2, 'day').format('LL'), amount: 3500},
-    {date: moment().subtract(3, 'day').format('LL'), amount: 4500},
-    {date: moment().subtract(4, 'day').format('LL'), amount: 5500},
+    {date: moment().subtract(1, 'day').format('LL'), amount: 1000},
+    {date: moment().subtract(1, 'day').format('LL'), amount: 1000},
+    {date: moment().subtract(1, 'day').format('LL'), amount: 1000},
+    {date: moment().subtract(1, 'day').format('LL'), amount: 1000},
+    {date: moment().subtract(1, 'day').format('LL'), amount: 1000},
+    {date: moment().subtract(1, 'day').format('LL'), amount: 600},
+    {date: moment().subtract(2, 'day').format('LL'), amount: 100},
+    {date: moment().subtract(2, 'day').format('LL'), amount: 100},
+    {date: moment().subtract(2, 'day').format('LL'), amount: 1000},
+    {date: moment().subtract(2, 'day').format('LL'), amount: 400},
+    {date: moment().subtract(2, 'day').format('LL'), amount: 500},
   ]);
-  const getDates = () => data.map((pair) => pair.date);
-  const getAmounts = () => data.map((pair) => pair.amount);
+  const [transformedData, setTransformedData] = useState([]);
+
+  useEffect(() => {
+    setTransformedData(transformData(groupBy(data, 'date')));
+  }, [data]);
+
+  const getDates = () => transformedData.map((pair) => pair.date);
+  const getAmounts = () => transformedData.map((pair) => pair.amount);
   // [data1, data2, data3, ,data4, data5]
   // ['10/27/2020'] -> '10/27/2020'
   const transformData = (groupedData) => {
@@ -45,12 +56,12 @@ const App = () => {
       return rv;
     }, {});
 
-  console.log('Debug', data);
-  console.log('The date', getDates());
-  console.log('the amount', getAmounts());
+  // console.log('Debug', data);
+  // console.log('The date', getDates());
+  // console.log('the amount', getAmounts());
 
-  console.log('the group by ', Object.entries(groupBy(data, 'date')));
-  console.log('total group by value', transformData(groupBy(data, 'date')));
+  // console.log('the group by ', Object.entries(groupBy(data, 'date')));
+  // console.log('total group by value', transformData(groupBy(data, 'date')));
   const [gigs, setGigs] = useState([
     {
       description: 'Freelance job with Me',
@@ -99,18 +110,10 @@ const App = () => {
   return (
     <SafeAreaView>
       <View>
-        <Text style={styles.titleText}>My Todo List App </Text>
+        <Text style={styles.titleText}>MyAPP </Text>
       </View>
       <View>
-        {/* <BarChart
-          // style={graphStyle}
-          data={data}
-          
-          height={220}
-          yAxisLabel="$"
-          chartConfig={chartConfig}
-          verticalLabelRotation={30}
-        /> */}
+  
         <Text>Bezier Line Chart</Text>
         <LineChart
           data={{
