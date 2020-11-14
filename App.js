@@ -44,10 +44,10 @@ const App = () => {
     const transformedArray = [];
     Object.entries(groupedData).forEach((entry) => {
       const total = entry[1].reduce((total, pair) => total + pair.amount, 0);
-      transformedArray.push({date: entry[0], amount: total});
+      transformedArray.push({date: moment(entry[0]).format('MM/DD'), amount: total});
     });
-
-    return transformedArray;
+    const sortedArray = transformedArray.sort((a, b) => moment(a['date']).diff(moment(b['date'])))
+    return sortedArray;
   };
 
   const groupBy = (array, key) =>
@@ -87,22 +87,20 @@ const App = () => {
   //   barPercentage: 0.5,
   //   useShadowColorFromDataset: false // optional
   // };
-  const dada = {
-    labels: getDates(),
-    datasets: [
-      {
-        data: getAmounts(),
-      },
-    ],
-  };
+
   const addGig = () => {
     setGigs([
       ...gigs,
       {
         description: description,
-        amount: amount,
-        timestamp: new Date(),
+        amount: Number(amount),
+        
       },
+    ]);
+    setData([
+      ...data,
+      {date: moment().format('LL'), 
+      amount: Number(amount)}
     ]);
     setDescription('');
     setAmount('');
@@ -110,7 +108,7 @@ const App = () => {
   return (
     <SafeAreaView>
       <View>
-        <Text style={styles.titleText}>MyAPP </Text>
+        <Text style={styles.titleText}>  MyAPP </Text>
       </View>
       <View>
   
@@ -126,8 +124,8 @@ const App = () => {
           }}
           width={Dimensions.get('window').width} // from react-native
           height={220}
-          yAxisLabel="$"
-          yAxisSuffix="k"
+          yAxisLabel="$ "
+          
           yAxisInterval={1} // optional, defaults to 1
           chartConfig={{
             backgroundColor: 'steelblue',
@@ -187,6 +185,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'steelblue',
     fontSize: 32,
     fontWeight: 'bold',
+    display: 'flex',
+    alignItems: 'center',
   },
   inputText: {
     height: 40,
