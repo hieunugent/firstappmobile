@@ -1,5 +1,5 @@
 import moment from 'moment';
-import React, {Component, useEffect, useState} from 'react';
+import React , {Component, useEffect, useState} from 'react';
 import {
   StyleSheet,
   SafeAreaView,
@@ -8,7 +8,7 @@ import {
   TextInput,
   Button,
   ScrollView,
-  Dimensions,
+ Dimensions, 
 } from 'react-native';
 import {LineChart, BarChart} from 'react-native-chart-kit';
 
@@ -16,6 +16,8 @@ const App = () => {
   const [description, setDescription] = useState('');
   const [amount, setAmount] = useState('');
   const [total, setTotal] = useState(0);
+
+
   const [data, setData] = useState([
     {date: moment().format('LL'), amount: 2000},
     {date: moment().subtract(1, 'day').format('LL'), amount: 1000},
@@ -31,15 +33,10 @@ const App = () => {
     {date: moment().subtract(2, 'day').format('LL'), amount: 500},
   ]);
   const [transformedData, setTransformedData] = useState([]);
-
   useEffect(() => {
     setTransformedData(transformData(groupBy(data, 'date')));
   }, [data]);
-
-  const getDates = () => transformedData.map((pair) => pair.date);
-  const getAmounts = () => transformedData.map((pair) => pair.amount);
-  // [data1, data2, data3, ,data4, data5]
-  // ['10/27/2020'] -> '10/27/2020'
+ 
   const transformData = (groupedData) => {
     const transformedArray = [];
     Object.entries(groupedData).forEach((entry) => {
@@ -49,19 +46,22 @@ const App = () => {
     const sortedArray = transformedArray.sort((a, b) => moment(a['date']).diff(moment(b['date'])))
     return sortedArray;
   };
-
+  const getDates = () => transformedData.map((pair) => pair.date);
+  const getAmounts = () => transformedData.map((pair) => pair.amount);
+  // [data1, data2, data3, ,data4, data5]
+  // ['10/27/2020'] -> '10/27/2020'
   const groupBy = (array, key) =>
     array.reduce((rv, x) => {
       (rv[x[key]] = rv[x[key]] || []).push(x);
       return rv;
     }, {});
 
-  // console.log('Debug', data);
-  // console.log('The date', getDates());
-  // console.log('the amount', getAmounts());
+  console.log('Debug', data);
+  console.log('The date', getDates());
+  console.log('the amount', getAmounts());
 
-  // console.log('the group by ', Object.entries(groupBy(data, 'date')));
-  // console.log('total group by value', transformData(groupBy(data, 'date')));
+  console.log('the group by ', Object.entries(groupBy(data, 'date')));
+  console.log('total group by value', transformData(groupBy(data, 'date')));
   const [gigs, setGigs] = useState([
     {
       description: 'Freelance job with Me',
@@ -77,16 +77,16 @@ const App = () => {
     );
   }, [gigs]);
 
-  // const chartConfig = {
-  //   backgroundGradientFrom: "green",
-  //   backgroundGradientFromOpacity: 0,
-  //   backgroundGradientTo: "green",
-  //   backgroundGradientToOpacity: 0.5,
-  //   color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
-  //   strokeWidth: 2, // optional, default 3
-  //   barPercentage: 0.5,
-  //   useShadowColorFromDataset: false // optional
-  // };
+  // // const chartConfig = {
+  // //   backgroundGradientFrom: "green",
+  // //   backgroundGradientFromOpacity: 0,
+  // //   backgroundGradientTo: "green",
+  // //   backgroundGradientToOpacity: 0.5,
+  // //   color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
+  // //   strokeWidth: 2, // optional, default 3
+  // //   barPercentage: 0.5,
+  // //   useShadowColorFromDataset: false // optional
+  // // };
 
   const addGig = () => {
     setGigs([
@@ -111,7 +111,6 @@ const App = () => {
         <Text style={styles.titleText}>  MyAPP </Text>
       </View>
       <View>
-  
         <Text>Bezier Line Chart</Text>
         <LineChart
           data={{
@@ -171,8 +170,8 @@ const App = () => {
         title="Add Gig"
       />
 
-      {gigs.map((gig) => (
-        <View>
+      {gigs.map((gig, index) => (
+        <View key={index}>
           <Text>{gig.description}</Text>
           <Text> $ {gig.amount}</Text>
         </View>
@@ -195,4 +194,6 @@ const styles = StyleSheet.create({
     margin: 20,
   },
 });
+
+
 export default App;
