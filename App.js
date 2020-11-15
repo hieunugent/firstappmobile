@@ -12,6 +12,16 @@ import {
 } from 'react-native';
 import {LineChart, BarChart} from 'react-native-chart-kit';
 
+const transformData = (groupedData) => {
+  const transformedArray = [];
+
+  Object.entries(groupedData).forEach((entry) => {
+    const total = entry[1].reduce((total, pair) => total + pair.amount, 0);
+    transformedArray.push({ date: moment(entry[0]).format('MM/DD'), amount: total });
+  });
+  const sortedArray = transformedArray.sort((a, b) => (moment(a['date'])).diff(moment(b['date'])))
+  return sortedArray;
+};
 const App = () => {
   const [description, setDescription] = useState('');
   const [amount, setAmount] = useState('');
@@ -28,7 +38,7 @@ const App = () => {
 
 
   const [data, setData] = useState([
-    
+   
     {date: moment().format('LL'), amount: 2000},
     {date: moment().subtract(1, 'day').format('LL'), amount: 1000},
     {date: moment().subtract(1, 'day').format('LL'), amount: 1000},
@@ -42,35 +52,31 @@ const App = () => {
     {date: moment().subtract(2, 'day').format('LL'), amount: 400},
     {date: moment().subtract(2, 'day').format('LL'), amount: 500},
   ]);
-  const transformData = (groupedData) => {
-    const transformedArray = [];
-  
-    Object.entries(groupedData).forEach((entry) => {
-      const total = entry[1].reduce((total, pair) => total + pair.amount, 0);
-      transformedArray.push({ date: moment(entry[0]).format('MM/DD'), amount: total });
-    });
-    const sortedArray = transformedArray.sort((a, b) => (moment(a['date'])).diff(moment(b['date'])))
-    return sortedArray;
-  };
-  const getDates = () => transformedData.map((pair) => pair.date);
-  const getAmounts = () => transformedData.map((pair) => pair.amount);
+
+  function getDates() {return transformedData.map((pair) => pair.date)};
+  function getAmounts(){return transformedData.map((pair) => pair.amount)};
+  // useEffect(() => {
+  //   setTransformedData(transformData(groupBy(data, 'date')));
+  // }, [])
   useEffect(() => {
-    setTransformedData(transformData(groupBy(data, 'date')));
+    
+      setTransformedData(transformData(groupBy(data, 'date')));
+    
   }, [data]);
  
-  
+ 
  
   // [data1, data2, data3, ,data4, data5]
   // ['10/27/2020'] -> '10/27/2020'
-  
-
+  if (data!=null)
+{
   console.log('Debug', data);
   console.log('The date', getDates());
   console.log('the amount', getAmounts());
 
   console.log('the group by ', Object.entries(groupBy(data, 'date')));
   console.log('total group by value', transformData(groupBy(data, 'date')));
-  transformedData.map(pair => console.log(pair.date , ":", pair.amount));
+  transformedData.map(pair => console.log(pair.date , ":", pair.amount));}
   const [gigs, setGigs] = useState([
     {
       description: 'Freelance job with Me',
