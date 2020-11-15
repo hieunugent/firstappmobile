@@ -43,14 +43,7 @@ const App = () => {
     {date: moment().subtract(1, 'day').format('LL'), amount: 1000},
     {date: moment().subtract(1, 'day').format('LL'), amount: 1000},
     {date: moment().subtract(1, 'day').format('LL'), amount: 1000},
-    {date: moment().subtract(1, 'day').format('LL'), amount: 1000},
-    {date: moment().subtract(1, 'day').format('LL'), amount: 1000},
-    {date: moment().subtract(1, 'day').format('LL'), amount: 600},
-    {date: moment().subtract(2, 'day').format('LL'), amount: 100},
-    {date: moment().subtract(2, 'day').format('LL'), amount: 100},
-    {date: moment().subtract(2, 'day').format('LL'), amount: 1000},
-    {date: moment().subtract(2, 'day').format('LL'), amount: 400},
-    {date: moment().subtract(2, 'day').format('LL'), amount: 500},
+  
   ]);
 
   function getDates() {return transformedData.map((pair) => pair.date)};
