@@ -108,7 +108,7 @@ const App = () => {
         <Text style={styles.titleText}> app v1.1</Text>
       </View>
       <View>
-        <Text>Bezier Line Chart</Text>
+        <Text style={styles.chartTitle}>Bezier Line Chart</Text>
         <LineChart
           data={{
             labels: getDates(),
@@ -189,6 +189,10 @@ const styles = StyleSheet.create({
     borderColor: 'red',
     borderWidth: 1,
     margin: 20,
+  },
+  chartTitle:{
+    fontSize:20,
+    justifyContent:'center',
   },
 });
 
